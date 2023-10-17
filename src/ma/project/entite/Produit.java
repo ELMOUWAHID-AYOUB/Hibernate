@@ -18,7 +18,8 @@ import javax.persistence.TemporalType;
  *
  * @author user
  */
-@Entity
+@Entity 
+@NamedNativeQuery(name = "findBetweenDate", query = "from Produit where dateNaissance between :d1 and :d2")
 public class Produit {
 
     @Id
