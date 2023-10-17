@@ -132,5 +132,24 @@ public class ProduitService implements IDao<Produit>{
         }
         return produits;
     }
+     public List<Produit> findBetweenDate(Date d1, Date d2) {
+        List<Produit> produits = null;
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            produits = session.getNamedQuery("betweenDate").setParameter("d1", d1).setParameter("d2", d2).list();
+            tx.commit();
+            return produits;
+        } catch (HibernateException ex) {
+            if(tx != null)
+                tx.rollback();
+            return produits;
+        } finally {
+            if(session != null)
+                session.close();
+        }
+    }
     
 }
